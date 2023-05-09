@@ -11,17 +11,17 @@ on:
 
 jobs:
   release:
-    continue-on-error: true
+    continue-on-error: false
     runs-on: ubuntu-latest
 
     steps:
       - name: 'Zip folder'
         uses: thedoctor0/zip-release@0.7.1
         with:
-          type: 'zip',
+          type: 'zip'
           filename: "agregore-history-${{github.ref_name}}.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
-      - name: Upload Release
+      - name: 'Upload Release'
         uses: ncipollo/release-action@v1.12.0
         with:
            artifacts: "agregore-history-${{github.ref_name}}.zip"
