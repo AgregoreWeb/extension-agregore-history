@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Agregore History Viewer</title>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+
+<style>
+    @import url("agregore://theme/style.css");
+
+    #searchForm {
+        display: flex;
+    }
+
+    #searchInput {
+        flex: 1;
+    }
+</style>
+
+<script src="idb.min.js"></script>
+<script src="view.js" type="module"></script>
+<H1>History</H1>
+<form id="searchForm">
+    <input id="searchInput" name="search" type="search" placeholder="agregore docs example" title="Search terms here">
+</form>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>URL</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="resultsContainer"></tbody>
+</table>
+<details>
+    <summary>How to search:</summary>
+    <p>
+        You can search through your history using "fuzzy matching".
+    </p>
+    <p>
+        Don't worry about capitals and just match letters or starts of words with spaces in between.
+    </p>
+    <p>
+        The search is done on latest entries first and will match against the URL + page title.
+    </p>
+</details>

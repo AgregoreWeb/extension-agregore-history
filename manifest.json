@@ -2,12 +2,12 @@
 	"manifest_version": 2,
 	"name": "agregore-history",
 	"version": "1.1.1",
-
 	"description": "The history tracking functionality for the Agregore Browser",
-
-	"permissions": ["webNavigation"],
-
+	"permissions": [
+		"webNavigation"
+	],
 	"background": {
 		"page": "background.html"
-	}
+	},
+	"options_page": "view.html"
 }
