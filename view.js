@@ -46,12 +46,17 @@ async function searchAndRender () {
   resultsContainer.innerHTML = ''
   for await (const { url, host, pathname, title, id } of search(searchTerm)) {
     const tr = document.createElement('tr')
+    const sanitizedTitle = sanitizeHTML(title)
+    const sanitizedURL = sanitizeHTML(host) + sanitizeHTML(pathname.slice(0, 32))
     tr.innerHTML = `
-        <td>${sanitizeHTML(title)}</td>
-        <td><a href="${new URL(url).href}">${sanitizeHTML(host)}${sanitizeHTML(pathname.slice(0, 32))}</a></td>
         <td>
-            <button title="Delete this item">❌</button>
-        </td>`
+          <button title="Delete this item">❌</button>
+        </td>
+        <td title="${sanitizedTitle}">${sanitizedTitle.slice(0, 32)}</td>
+        <td>
+          <a href="${new URL(url).href}">${sanitizedURL}</a>
+        </td>
+    `
     tr.querySelector('button').onclick = () => {
       deleteHistoryItem(id)
     }
