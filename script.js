@@ -37,24 +37,32 @@ async function main () {
     const regexText = query.split(' ').reduce((result, letter) => `${result}.*${letter}`, '')
     const filter = new RegExp(regexText, 'iu')
 
-    const index = db.transaction(HISTORY_STORE, 'readonly').store.index('timestamp')
-    const start = Date.now()
+    let start = Date.now()
     const range = IDBKeyRange.upperBound(start)
-    const iterator = index.iterate(range, 'prev')
+    let cursor = await db
+      .transaction(HISTORY_STORE, 'readonly')
+      .store.index('timestamp')
+      .openCursor(range, 'prev')
 
-    for await (const { value } of iterator) {
+    while(cursor) {
+      const {key, value} = cursor
+      start = key
       const { search: searchString, url } = value
-      if (searchString.match(filter)) {
-        if (seen.has(url)) continue
+      if (searchString.match(filter) && !seen.has(url)) {
         seen.add(url)
         yield value
         sent++
-        if (sent >= MAX_RESULTS) break
+        if (sent >= maxResults) break
+        const range = IDBKeyRange.upperBound(start)
+        cursor = await db
+          .transaction(HISTORY_STORE, 'readonly')
+        .  store.index('timestamp')
+          .openCursor(range, 'prev')
       }
       if (signal && signal.aborted) {
-        console.debug('Aborted search')
         break
       }
+      cursor = await cursor.continue()
     }
   }
 
@@ -78,7 +86,7 @@ async function main () {
       search: `${url} ${title}`
     }
 
-    console.log('Navigation event', historyItem)
+    // console.log('Navigation event', historyItem)
 
     await db.add(HISTORY_STORE, historyItem)
   }
