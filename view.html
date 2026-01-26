@@ -25,44 +25,6 @@
         align-items: center;
         gap: 1rem;
         margin: 1rem 0;
-        padding: 0.75rem 1rem;
-        border: 1px solid currentColor;
-        border-radius: 6px;
-        opacity: 0.85;
-    }
-
-    .filter-group {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 0.9rem;
-    }
-
-    #timeFilter {
-        padding: 0.4rem 0.6rem;
-        border: 1px solid currentColor;
-        border-radius: 6px;
-        background: transparent;
-        color: inherit;
-    }
-
-    .action-group {
-        display: flex;
-        gap: 0.75rem;
-    }
-
-    .action-btn {
-        padding: 0.4rem 0.8rem;
-        border-radius: 6px;
-        border: 1px solid currentColor;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-    }
-
-    .action-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
     }
 </style>
 
@@ -73,21 +35,6 @@
     <input id="searchInput" name="search" type="search" placeholder="agregore docs example" title="Search terms here">
 </form>
 <hr>
-<div class="history-controls">
-    <div class="filter-group">
-        <label for="timeFilter">Time</label>
-        <select id="timeFilter">
-            <option value="all">All time</option>
-            <option value="day">Last 24 hours</option>
-            <option value="week">Last 7 days</option>
-            <option value="month">Last 30 days</option>
-        </select>
-    </div>
-    <div class="action-group">
-        <button type="button" id="deleteRangeBtn" class="action-btn">Delete Period</button>
-        <button type="button" id="deleteAllBtn" class="action-btn">Delete All</button>
-    </div>
-</div>
 <table>
     <thead>
         <tr>
@@ -110,3 +57,15 @@
         The search is done on latest entries first and will match against the URL + page title.
     </p>
 </details>
+<form id="historyControls" class="history-controls">
+    <label>
+        Time
+        <select id="timeFilter">
+            <option value="all">All time</option>
+            <option value="day">Last 24 hours</option>
+            <option value="week">Last 7 days</option>
+            <option value="month">Last 30 days</option>
+        </select>
+    </label>
+    <button type="submit" id="deleteRangeBtn">Delete Period</button>
+</form>

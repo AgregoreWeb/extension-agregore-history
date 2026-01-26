@@ -30,34 +30,22 @@ searchAndRender()
 
 const timeFilter = document.getElementById('timeFilter')
 const deleteRangeBtn = document.getElementById('deleteRangeBtn')
-const deleteAllBtn = document.getElementById('deleteAllBtn')
+const historyControls = document.getElementById('historyControls')
 
-if (timeFilter) {
-  timeFilter.onchange = () => {
-    currentRange = timeFilter.value || 'all'
-    updateDeleteRangeState()
-    searchAndRender()
-  }
+timeFilter.onchange = () => {
+  currentRange = timeFilter.value || 'all'
+  updateDeleteRangeState()
+  searchAndRender()
 }
 
-if (deleteAllBtn) {
-  deleteAllBtn.onclick = async () => {
-    if (confirm('Delete all history?')) {
-      await db.clear(HISTORY_STORE)
-      await searchAndRender()
-    }
-  }
-}
-
-if (deleteRangeBtn) {
-  deleteRangeBtn.onclick = async () => {
-    if (currentRange === 'all') return
-    const label = getRangeLabel(currentRange)
-    if (confirm(`Delete history for ${label}?`)) {
-      const since = getRangeStart(currentRange)
-      await deleteHistoryRange(since)
-      await searchAndRender()
-    }
+historyControls.onsubmit = async (event) => {
+  event.preventDefault()
+  if (currentRange === 'all') return
+  const label = getRangeLabel(currentRange)
+  if (confirm(`Delete history for ${label}?`)) {
+    const since = getRangeStart(currentRange)
+    await deleteHistoryRange(since)
+    await searchAndRender()
   }
 }
 
@@ -93,9 +81,6 @@ function getRangeStart (range) {
 }
 
 function updateDeleteRangeState () {
-  if (!deleteRangeBtn) return
-  const label = getRangeLabel(currentRange)
-  deleteRangeBtn.textContent = currentRange === 'all' ? 'Delete Period' : `Delete ${label}`
   deleteRangeBtn.disabled = currentRange === 'all'
 }
 
