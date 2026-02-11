@@ -40,11 +40,14 @@ timeFilter.onchange = () => {
 
 historyControls.onsubmit = async (event) => {
   event.preventDefault()
-  if (currentRange === 'all') return
   const label = getRangeLabel(currentRange)
   if (confirm(`Delete history for ${label}?`)) {
-    const since = getRangeStart(currentRange)
-    await deleteHistoryRange(since)
+    if (currentRange === 'all') {
+      await db.clear(HISTORY_STORE)
+    } else {
+      const since = getRangeStart(currentRange)
+      await deleteHistoryRange(since)
+    }
     await searchAndRender()
   }
 }
@@ -81,7 +84,7 @@ function getRangeStart (range) {
 }
 
 function updateDeleteRangeState () {
-  deleteRangeBtn.disabled = currentRange === 'all'
+  deleteRangeBtn.disabled = false
 }
 
 async function searchAndRender () {
