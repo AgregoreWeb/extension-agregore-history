@@ -34,7 +34,6 @@ const historyControls = document.getElementById('historyControls')
 
 timeFilter.onchange = () => {
   currentRange = timeFilter.value || 'all'
-  updateDeleteRangeState()
   searchAndRender()
 }
 
@@ -51,8 +50,6 @@ historyControls.onsubmit = async (event) => {
     await searchAndRender()
   }
 }
-
-updateDeleteRangeState()
 
 searchForm.onchange = () => {
   devouncedSearch()
@@ -81,10 +78,6 @@ function getRangeStart (range) {
   if (range === 'week') return now - 7 * 24 * 60 * 60 * 1000
   if (range === 'month') return now - 30 * 24 * 60 * 60 * 1000
   return 0
-}
-
-function updateDeleteRangeState () {
-  deleteRangeBtn.disabled = false
 }
 
 async function searchAndRender () {
