@@ -18,6 +18,14 @@
     #searchInput {
         flex: 1;
     }
+
+    .history-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
 </style>
 
 <script src="idb.min.js"></script>
@@ -49,3 +57,15 @@
         The search is done on latest entries first and will match against the URL + page title.
     </p>
 </details>
+<form id="historyControls" class="history-controls">
+    <label>
+        Time
+        <select id="timeFilter">
+            <option value="all">All time</option>
+            <option value="day">Last 24 hours</option>
+            <option value="week">Last 7 days</option>
+            <option value="month">Last 30 days</option>
+        </select>
+    </label>
+    <button type="submit" id="deleteRangeBtn">Delete Period</button>
+</form>
